@@ -21,7 +21,7 @@ class Seaslog
 {
     protected $config = [
         'time_format' => ' c ',
-        'path'        => LOG_PATH,
+        'path'        => '',
         'logger'      => '',
         'json'        => false,
     ];
@@ -31,6 +31,11 @@ class Seaslog
     {
         if (is_array($config)) {
             $this->config = array_merge($this->config, $config);
+        }
+        if (empty($this->config['path'])) {
+            $this->config['path'] = $this->app->getRuntimePath() . 'log' . DIRECTORY_SEPARATOR;
+        } elseif (substr($this->config['path'], -1) != DIRECTORY_SEPARATOR) {
+            $this->config['path'] .= DIRECTORY_SEPARATOR;
         }
 
         \SeasLog::setBasePath($this->config['path']);
