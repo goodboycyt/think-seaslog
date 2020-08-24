@@ -71,7 +71,9 @@ class Seaslog
             if ($this->config['json']) {
                 $info[$type] = $val;
             } else {
-                \SeasLog::log($type, implode("\n\r", $val));
+                foreach ($val as $v) {
+                    \SeasLog::log($type, $v);
+                }
             }
         }
 
