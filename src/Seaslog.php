@@ -12,7 +12,7 @@
 namespace think\log\driver;
 
 use think\App;
-
+use think\facade\Request;
 /**
  * 本地化调试输出到文件
  */
@@ -43,7 +43,6 @@ class Seaslog
         }
 
         \SeasLog::setBasePath($this->config['path']);
-
         if ($this->config['logger']) {
             \SeasLog::setLogger($this->config['logger']);
         }
@@ -58,6 +57,7 @@ class Seaslog
      */
     public function save(array $log = [], $append = false)
     {
+        $this->config['logger'] = empty(Request::controller())?'':Request::controller().'/'.Request::action();
         if (PHP_SAPI != 'cli') {
             if (!$this->config['json']) {
                 \SeasLog::log('info', $this->parseLog());
