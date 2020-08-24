@@ -41,11 +41,7 @@ class Seaslog
         } elseif (substr($this->config['path'], -1) != DIRECTORY_SEPARATOR) {
             $this->config['path'] .= DIRECTORY_SEPARATOR;
         }
-
         \SeasLog::setBasePath($this->config['path']);
-        if ($this->config['logger']) {
-            \SeasLog::setLogger($this->config['logger']);
-        }
     }
 
     /**
@@ -58,6 +54,9 @@ class Seaslog
     public function save(array $log = [], $append = false)
     {
         $this->config['logger'] = empty(Request::controller())?'':Request::controller().'/'.Request::action();
+        if ($this->config['logger']) {
+            \SeasLog::setLogger($this->config['logger']);
+        }
         if (PHP_SAPI != 'cli') {
             if (!$this->config['json']) {
                 \SeasLog::log('info', $this->parseLog());
