@@ -5,7 +5,7 @@ ThinkPHP 5.0 SeasLog 日志扩展
 ## 安装
 
 ~~~
-composer require topthink/think-seaslog
+composer require linwanfeng/think-seaslog
 ~~~
 
 ## 配置
